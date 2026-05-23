@@ -14,7 +14,7 @@
             --button-bg: #111215;
             --button-border: rgba(255, 255, 255, 0.08);
             --accent-blue: #0a84ff;
-            --glow-color: rgba(150, 150, 150, 0.3); /* Серое свечение */
+            --glow-color: rgba(150, 150, 150, 0.3);
         }
 
         * {
@@ -34,7 +34,6 @@
             position: relative;
         }
 
-        /* Задний фон со свечением */
         body::before {
             content: "";
             position: fixed;
@@ -47,14 +46,13 @@
 
         .app-container {
             width: 100%;
-            max-width: 480px;
-            padding: 40px 20px;
+            max-width: 500px;
+            padding: 40px 14px; 
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        /* --- АНИМАЦИЯ НАЖАТИЯ ДЛЯ ВСЕХ КНОПОК --- */
         .interactive-btn {
             transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease, background-color 0.15s ease;
             text-decoration: none;
@@ -62,93 +60,88 @@
             display: block;
         }
 
-        .interactive-btn:active {
-            transform: scale(0.94); /* Кнопка прожимается */
-            box-shadow: 0 0 20px var(--glow-color); /* Серое свечение по бокам */
-            background-color: rgba(255, 255, 255, 0.05); /* Легкое высветление фона */
+        /* ТЕПЕРЬ АНИМАЦИЯ РАБОТАЕТ И ПРИ КАСАНИИ, И ПОСЛЕ НЕГО НАВСЕГДА */
+        .interactive-btn:active,
+        .interactive-btn.pressed-state {
+            transform: scale(0.94);
+            box-shadow: 0 0 20px var(--glow-color);
+            background-color: rgba(255, 255, 255, 0.05);
         }
 
-        /* --- ВЕРХНЯЯ КНОПКА --- */
         .top-pill-btn {
             display: flex;
             align-items: center;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid var(--button-border);
             border-radius: 40px;
-            padding: 4px 12px 4px 4px;
-            font-size: 13px;
+            padding: 4px 14px 4px 4px;
+            font-size: 14px;
             font-weight: 500;
             margin-bottom: 24px;
         }
 
-        .avatar-group { display: flex; margin-right: 8px; }
+        .avatar-group { display: flex; margin-right: 10px; }
 
         .avatar {
-            width: 24px; height: 24px;
+            width: 26px; height: 26px;
             border-radius: 50%;
             border: 2px solid var(--bg-color);
-            background: #222;
+            background: transparent;
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
-            font-size: 12px;
         }
         
         .avatar:last-child { margin-left: -8px; }
-        .tg-badge { background: #0088cc; padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+        .tg-badge { background: #0088cc; padding: 3px 10px; border-radius: 12px; font-size: 12px; }
 
-        /* --- ЗАГОЛОВКИ --- */
-        .title { font-size: 38px; font-weight: 800; text-align: center; line-height: 1.05; margin-bottom: 16px; letter-spacing: -0.5px; }
-        .subtitle { font-size: 15px; text-align: center; line-height: 1.4; opacity: 0.9; margin-bottom: 30px; }
+        .title { font-size: 42px; font-weight: 800; text-align: center; line-height: 1.05; margin-bottom: 16px; letter-spacing: -0.5px; }
+        .subtitle { font-size: 16px; text-align: center; line-height: 1.4; opacity: 0.9; margin-bottom: 30px; }
 
-        /* --- КАРТОЧКА --- */
         .card {
             background: var(--card-bg);
             border: 1px solid var(--button-border);
             border-radius: 28px;
-            padding: 24px 20px;
+            padding: 28px 22px; 
             width: 100%;
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             margin-bottom: 24px;
         }
 
-        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
-        .step-text { font-size: 13px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 12px; }
-        .alert-text { font-size: 13px; color: var(--text-red); font-weight: 500; margin-bottom: 16px; }
+        .section-title { font-size: 22px; font-weight: 700; margin-bottom: 14px; }
+        .step-text { font-size: 14px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 14px; }
+        .alert-text { font-size: 14px; color: var(--text-red); font-weight: 500; margin-bottom: 18px; }
 
-        /* --- БОЛЬШИЕ КНОПКИ --- */
         .main-btn {
             display: flex;
             align-items: center;
             justify-content: space-between;
             background: var(--button-bg);
             border: 1px solid var(--button-border);
-            border-radius: 16px;
-            padding: 12px 16px;
-            margin-bottom: 16px;
+            border-radius: 18px;
+            padding: 14px 18px;
+            margin-bottom: 18px;
         }
 
-        .btn-left { display: flex; align-items: center; font-size: 17px; font-weight: 600; }
+        .btn-left { display: flex; align-items: center; font-size: 18px; font-weight: 600; }
         
         .btn-icon-sq {
-            width: 32px; height: 32px;
+            width: 36px; height: 36px;
             border-radius: 8px;
-            background: #222;
-            margin-right: 12px;
+            background: transparent;
+            margin-right: 14px;
             display: flex; align-items: center; justify-content: center;
             overflow: hidden;
-            font-size: 16px;
         }
         
         .arrow-icon { opacity: 0.4; }
 
-        /* --- VPN КНОПКИ --- */
         .vpn-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
-            margin-bottom: 24px;
+            gap: 12px;
+            margin-bottom: 26px;
         }
 
         .vpn-btn {
@@ -158,59 +151,57 @@
             justify-content: center;
             background: transparent;
             border: 1px solid var(--button-border);
-            border-radius: 14px;
-            padding: 10px;
-            font-size: 12px;
+            border-radius: 16px;
+            padding: 12px 10px;
+            font-size: 13px;
             font-weight: 500;
         }
 
         .vpn-icon {
-            width: 16px; height: 16px;
-            border-radius: 4px;
-            background: #333;
+            width: 24px; height: 24px;
+            border-radius: 6px;
+            background: transparent;
             margin-right: 8px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 10px;
             overflow: hidden;
         }
 
-        .vpn-divider { color: var(--text-secondary); font-size: 14px; font-weight: 500; }
+        .vpn-divider { color: var(--text-secondary); font-size: 16px; font-weight: 500; }
 
-        .divider { height: 1px; background: rgba(255,255,255,0.08); border: none; margin: 24px 0; }
+        .divider { height: 1px; background: rgba(255,255,255,0.08); border: none; margin: 26px 0; }
 
-        /* --- ОШИБКИ --- */
-        .error-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 16px; }
+        .error-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 16px; }
 
         .mockup-error-box {
             background: rgba(30, 32, 38, 0.6);
             border: 1px solid var(--button-border);
             border-radius: 20px;
-            padding: 20px;
-            text-align: center;
+            padding: 22px;
+            text-align: left;
         }
 
-        .error-box-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; line-height: 1.3; }
-        .error-box-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.3; }
+        .error-box-title { font-size: 17px; font-weight: 600; margin-bottom: 12px; line-height: 1.3; }
+        .error-box-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.4; }
         
         .blue-ok-btn {
             background: var(--accent-blue);
             color: white;
-            font-size: 17px;
+            font-size: 18px;
             font-weight: 600;
-            padding: 12px;
+            padding: 14px;
             border-radius: 14px;
             width: 100%;
+            text-align: center; 
         }
 
-        /* --- ПОДВАЛ --- */
         .footer-badge {
             display: flex; align-items: center;
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--button-border);
-            padding: 6px 16px;
+            padding: 8px 18px;
             border-radius: 20px;
-            font-size: 14px;
-            margin-bottom: 16px;
+            font-size: 15px;
+            margin-bottom: 18px;
         }
 
         .green-dot {
@@ -221,7 +212,9 @@
             box-shadow: 0 0 8px #32d74b;
         }
 
-        .copyright { font-size: 12px; color: var(--text-secondary); text-align: center; line-height: 1.4; }
+        .copyright { font-size: 13px; color: var(--text-secondary); text-align: center; line-height: 1.4; }
+
+        img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
@@ -231,10 +224,10 @@
     <a href="https://t.me/+pcYto3HwJiIzMzVi" class="top-pill-btn interactive-btn">
         <div class="avatar-group">
             <div class="avatar">
-                <img src="https://github.com/appleclubq/appledownload/releases/download/icon/Apple.png" alt="" style="width:100%;">
+                <img src="https://github.com/appleclubq/appledownload/releases/download/icon/Apple.png" alt="Apple Club">
             </div>
-            <div class="avatar" style="background:#0088cc;">
-                <img src="" alt="" style="width:100%; display:none;">✈️
+            <div class="avatar">
+                <img src="https://github.com/appleclubq/appledownload/releases/download/icon/Telegram.png" alt="Telegram">
             </div>
         </div>
         <span class="tg-badge">@appleclubq</span>
@@ -251,8 +244,8 @@
 
         <a href="itms-services://?action=download-manifest&url=https://sign.applep12.com/GetPlist/69fcf913-6964-ef01-002a-8c82614d2a3f" class="main-btn interactive-btn">
             <div class="btn-left">
-                <div class="btn-icon-sq" style="background: linear-gradient(135deg, #64748b, #334155);">
-                    <img src="https://github.com/appleclubq/appledownload/releases/download/icon/Feather.png" alt="" style="width:100%;">
+                <div class="btn-icon-sq">
+                    <img src="https://github.com/appleclubq/appledownload/releases/download/icon/Feather.png" alt="Feather">
                 </div>
                 Установить Feather
             </div>
@@ -264,7 +257,7 @@
         <div class="vpn-row">
             <a href="https://t.me/vpnusvpn_bot?start=invite_957641" class="vpn-btn interactive-btn">
                 <div class="vpn-icon">
-                    <img src="https://github.com/appleclubq/appledownload/releases/download/icon/VPN.jpg" alt="" style="width:100%;">
+                    <img src="https://github.com/appleclubq/appledownload/releases/download/icon/VPN.jpg" alt="VPN">
                 </div>
                 VPN в Telegram
             </a>
@@ -273,7 +266,7 @@
 
             <a href="https://thecontentdeliverynetwork.com/mini-app/?invite=957641" class="vpn-btn interactive-btn">
                 <div class="vpn-icon">
-                    <img src="https://github.com/appleclubq/appledownload/releases/download/icon/VPN.jpg" alt="" style="width:100%;">
+                    <img src="https://github.com/appleclubq/appledownload/releases/download/icon/VPN.jpg" alt="VPN">
                 </div>
                 VPN на сайте
             </a>
@@ -283,8 +276,8 @@
 
         <a href="feather://source/https://appleclubq.github.io/ipaaps.json" class="main-btn interactive-btn">
             <div class="btn-left">
-                <div class="btn-icon-sq" style="background: white;">
-                    <img src="https://github.com/appleclubq/appledownload/releases/download/icon/GitHub.png" alt="" style="width:100%;">
+                <div class="btn-icon-sq">
+                    <img src="https://github.com/appleclubq/appledownload/releases/download/icon/GitHub.png" alt="GitHub">
                 </div>
                 Добавить репозиторий
             </div>
@@ -319,6 +312,18 @@
     </div>
 
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const buttons = document.querySelectorAll('.interactive-btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                // При клике добавляем класс pressed-state навсегда
+                this.classList.add('pressed-state');
+            });
+        });
+    });
+</script>
 
 </body>
 </html>
