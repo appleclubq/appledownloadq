@@ -14,7 +14,6 @@
             --button-bg: #111215;
             --button-border: rgba(255, 255, 255, 0.08);
             --accent-blue: #0a84ff;
-            --glow-color: rgba(150, 150, 150, 0.3);
         }
 
         * {
@@ -53,6 +52,7 @@
             align-items: center;
         }
 
+        /* --- НОВАЯ АНИМАЦИЯ НАЖАТИЯ И ОТЖАТИЯ --- */
         .interactive-btn {
             transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease, background-color 0.15s ease;
             text-decoration: none;
@@ -60,12 +60,11 @@
             display: block;
         }
 
-        /* ТЕПЕРЬ АНИМАЦИЯ РАБОТАЕТ И ПРИ КАСАНИИ, И ПОСЛЕ НЕГО НАВСЕГДА */
-        .interactive-btn:active,
-        .interactive-btn.pressed-state {
+        /* В момент нажатия масштаб уменьшается, а свечение становится максимальным */
+        .interactive-btn:active {
             transform: scale(0.94);
-            box-shadow: 0 0 20px var(--glow-color);
-            background-color: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 25px rgba(200, 200, 200, 0.45); /* Сильное серое свечение */
+            background-color: rgba(255, 255, 255, 0.08);
         }
 
         .top-pill-btn {
@@ -312,18 +311,6 @@
     </div>
 
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const buttons = document.querySelectorAll('.interactive-btn');
-        buttons.forEach(button => {
-            button.addEventListener('click', function() {
-                // При клике добавляем класс pressed-state навсегда
-                this.classList.add('pressed-state');
-            });
-        });
-    });
-</script>
 
 </body>
 </html>
