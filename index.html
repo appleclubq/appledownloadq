@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Установщик Apple Club</title>
+    <style>
+        :root {
+            --bg-color: #0d0e12;
+            --card-bg: rgba(22, 24, 28, 0.75);
+            --text-main: #ffffff;
+            --text-secondary: #8e8e93;
+            --text-red: #ff453a;
+            --button-bg: #111215;
+            --button-border: rgba(255, 255, 255, 0.08);
+            --accent-blue: #0a84ff;
+            --glow-color: rgba(150, 150, 150, 0.3); /* Серое свечение */
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Задний фон со свечением */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 100% 40%, rgba(20, 50, 140, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 0% 60%, rgba(20, 50, 140, 0.15) 0%, transparent 45%);
+            z-index: -1;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- АНИМАЦИЯ НАЖАТИЯ ДЛЯ ВСЕХ КНОПОК --- */
+        .interactive-btn {
+            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.15s ease, background-color 0.15s ease;
+            text-decoration: none;
+            color: var(--text-main);
+            display: block;
+        }
+
+        .interactive-btn:active {
+            transform: scale(0.94); /* Кнопка прожимается */
+            box-shadow: 0 0 20px var(--glow-color); /* Серое свечение по бокам */
+            background-color: rgba(255, 255, 255, 0.05); /* Легкое высветление фона */
+        }
+
+        /* --- ВЕРХНЯЯ КНОПКА --- */
+        .top-pill-btn {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--button-border);
+            border-radius: 40px;
+            padding: 4px 12px 4px 4px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+
+        .avatar-group { display: flex; margin-right: 8px; }
+
+        .avatar {
+            width: 24px; height: 24px;
+            border-radius: 50%;
+            border: 2px solid var(--bg-color);
+            background: #222;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            font-size: 12px;
+        }
+        
+        .avatar:last-child { margin-left: -8px; }
+        .tg-badge { background: #0088cc; padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+
+        /* --- ЗАГОЛОВКИ --- */
+        .title { font-size: 38px; font-weight: 800; text-align: center; line-height: 1.05; margin-bottom: 16px; letter-spacing: -0.5px; }
+        .subtitle { font-size: 15px; text-align: center; line-height: 1.4; opacity: 0.9; margin-bottom: 30px; }
+
+        /* --- КАРТОЧКА --- */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--button-border);
+            border-radius: 28px;
+            padding: 24px 20px;
+            width: 100%;
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            margin-bottom: 24px;
+        }
+
+        .section-title { font-size: 20px; font-weight: 700; margin-bottom: 12px; }
+        .step-text { font-size: 13px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 12px; }
+        .alert-text { font-size: 13px; color: var(--text-red); font-weight: 500; margin-bottom: 16px; }
+
+        /* --- БОЛЬШИЕ КНОПКИ --- */
+        .main-btn {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--button-bg);
+            border: 1px solid var(--button-border);
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+        }
+
+        .btn-left { display: flex; align-items: center; font-size: 17px; font-weight: 600; }
+        
+        .btn-icon-sq {
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            background: #222;
+            margin-right: 12px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+            font-size: 16px;
+        }
+        
+        .arrow-icon { opacity: 0.4; }
+
+        /* --- VPN КНОПКИ --- */
+        .vpn-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .vpn-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid var(--button-border);
+            border-radius: 14px;
+            padding: 10px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .vpn-icon {
+            width: 16px; height: 16px;
+            border-radius: 4px;
+            background: #333;
+            margin-right: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px;
+            overflow: hidden;
+        }
+
+        .vpn-divider { color: var(--text-secondary); font-size: 14px; font-weight: 500; }
+
+        .divider { height: 1px; background: rgba(255,255,255,0.08); border: none; margin: 24px 0; }
+
+        /* --- ОШИБКИ --- */
+        .error-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.4; margin-bottom: 16px; }
+
+        .mockup-error-box {
+            background: rgba(30, 32, 38, 0.6);
+            border: 1px solid var(--button-border);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .error-box-title { font-size: 16px; font-weight: 600; margin-bottom: 12px; line-height: 1.3; }
+        .error-box-text { font-size: 14px; color: var(--text-secondary); margin-bottom: 20px; line-height: 1.3; }
+        
+        .blue-ok-btn {
+            background: var(--accent-blue);
+            color: white;
+            font-size: 17px;
+            font-weight: 600;
+            padding: 12px;
+            border-radius: 14px;
+            width: 100%;
+        }
+
+        /* --- ПОДВАЛ --- */
+        .footer-badge {
+            display: flex; align-items: center;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--button-border);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .green-dot {
+            width: 8px; height: 8px;
+            background: #32d74b;
+            border-radius: 50%;
+            margin-right: 8px;
+            box-shadow: 0 0 8px #32d74b;
+        }
+
+        .copyright { font-size: 12px; color: var(--text-secondary); text-align: center; line-height: 1.4; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+
+    <a href="https://t.me/+pcYto3HwJiIzMzVi" class="top-pill-btn interactive-btn">
+        <div class="avatar-group">
+            <div class="avatar">
+                <img src="" alt="" style="width:100%; display:none;">🍏
+            </div>
+            <div class="avatar" style="background:#0088cc;">
+                <img src="" alt="" style="width:100%; display:none;">✈️
+            </div>
+        </div>
+        <span class="tg-badge">@appleclubq</span>
+    </a>
+
+    <h1 class="title">Установщик<br>Apple Club</h1>
+    <p class="subtitle">Пожалуйста, для успешной установки<br>следуйте инструкции из видео</p>
+
+    <div class="card">
+        
+        <h2 class="section-title">Установка приложений</h2>
+        <p class="step-text">#1 Установите Feather, с помощью него вы можете установить любое приложение на iPhone.</p>
+        <p class="alert-text">Работает только с VPN!</p>
+
+        <a href="itms-services://?action=download-manifest&url=https://sign.applep12.com/GetPlist/69fcf913-6964-ef01-002a-8c82614d2a3f" class="main-btn interactive-btn">
+            <div class="btn-left">
+                <div class="btn-icon-sq" style="background: linear-gradient(135deg, #64748b, #334155);">
+                    <img src="" alt="" style="width:100%; display:none;">🪶
+                </div>
+                Установить Feather
+            </div>
+            <div class="arrow-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+        </a>
+
+        <div class="vpn-row">
+            <a href="https://t.me/vpnusvpn_bot?start=invite_957641" class="vpn-btn interactive-btn">
+                <div class="vpn-icon">
+                    <img src="" alt="" style="width:100%; display:none;">🛡️
+                </div>
+                VPN в Telegram
+            </a>
+            
+            <span class="vpn-divider">&</span>
+
+            <a href="https://thecontentdeliverynetwork.com/mini-app/?invite=957641" class="vpn-btn interactive-btn">
+                <div class="vpn-icon">
+                    <img src="" alt="" style="width:100%; display:none;">🛡️
+                </div>
+                VPN на сайте
+            </a>
+        </div>
+
+        <p class="step-text">#2 Нажмите на кнопку и репозиторий добавится автоматически!</p>
+
+        <a href="feather://source/https://appleclubq.github.io/ipaaps.json" class="main-btn interactive-btn">
+            <div class="btn-left">
+                <div class="btn-icon-sq" style="background: white;">
+                    <img src="" alt="" style="width:100%; display:none;">🖤
+                </div>
+                Добавить репозиторий
+            </div>
+            <div class="arrow-icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+            </div>
+        </a>
+
+        <p class="step-text" style="margin-bottom:0;">#3 Готово! Выбирайте приложение и устанавливайте.</p>
+
+        <hr class="divider">
+
+        <h2 class="section-title">Возможные ошибки</h2>
+        <p class="error-desc">Если вы видите такое уведомление, то бесплатный сертификат перестал работать, и пока что установить приложение не получится.</p>
+        <p class="error-desc">Как только появится новый бесплатный способ, мы обновим ссылку и установка будет доступна. Следите за новостями в нашем Telegram канале.</p>
+
+        <div class="mockup-error-box">
+            <h3 class="error-box-title">Не удаётся установить<br>приложение «Feather - Signed<br>By AppleP12»</h3>
+            <p class="error-box-text">Невозможно установить это приложение, так как не удалось проверить его целостность.</p>
+            <div class="blue-ok-btn">OK</div>
+        </div>
+
+    </div>
+
+    <div class="footer-badge">
+        <div class="green-dot"></div>
+        Безопасная установка
+    </div>
+
+    <div class="copyright">
+        Apple Club 2026 ©<br>Все права защищены
+    </div>
+
+</div>
+
+</body>
+</html>
